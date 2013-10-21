@@ -74,6 +74,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 #ifdef CONFIG_RTL8192C
 	/*=== Realtek demoboard ===*/		
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x8191)},//Default ID
+	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x0179)},//Default ID
 
 	/****** 8188CUS ********/
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x8176)},//8188cu 1*1 dongole
