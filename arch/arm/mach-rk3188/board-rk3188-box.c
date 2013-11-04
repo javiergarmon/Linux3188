@@ -2015,21 +2015,21 @@ static void __init rk30_reserve(void)
 #endif
 
 #ifdef CONFIG_FB_ROCKCHIP
-	resource_fb[0].start = board_mem_reserve_add("fb0 buf", RK30_FB0_MEM_SIZE);
-	resource_fb[0].end = resource_fb[0].start + RK30_FB0_MEM_SIZE- 1;
-#ifdef OMEGAMOON_CHANGED
+	resource_fb[0].start = board_mem_reserve_add("fb0 buf", get_fb_size());
+	resource_fb[0].end = resource_fb[0].start + get_fb_size()- 1;
+/*#ifdef OMEGAMOON_CHANGED
 //  Omegamoon >> Referenced in drivers/video/rockchip/rk_fb.c
 	resource_fb[1].start = board_mem_reserve_add("ipp buf", RK30_IPP_MEM_SIZE);
 	resource_fb[1].end = resource_fb[1].start + RK30_IPP_MEM_SIZE - 1;
-#endif
-#if 0
+#endif*/
+#if 1
 	resource_fb[1].start = board_mem_reserve_add("ipp buf", RK30_FB0_MEM_SIZE);
 	resource_fb[1].end = resource_fb[1].start + RK30_FB0_MEM_SIZE - 1;
 #endif
 
 #if defined(CONFIG_FB_ROTATE) || !defined(CONFIG_THREE_FB_BUFFER)
-	resource_fb[2].start = board_mem_reserve_add("fb2 buf",RK30_FB0_MEM_SIZE);
-	resource_fb[2].end = resource_fb[2].start + RK30_FB0_MEM_SIZE - 1;
+	resource_fb[2].start = board_mem_reserve_add("fb2 buf",get_fb_size());
+	resource_fb[2].end = resource_fb[2].start + get_fb_size() - 1;
 #endif
 #endif
 
