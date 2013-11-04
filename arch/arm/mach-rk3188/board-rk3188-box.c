@@ -83,6 +83,19 @@
 #include "../mach-rk30/board-rk31-vmac.c"
 #endif
 
+ //Galland: for MALI support
+#ifdef  CONFIG_THREE_FB_BUFFER
+#define RK30_FB0_MEM_SIZE 12*SZ_1M
+#else
+#define RK30_FB0_MEM_SIZE 8*SZ_1M
+#endif
+
+#ifdef CONFIG_BOX_FB_1080P
+	#define RK30_IPP_MEM_SIZE 32*SZ_1M 
+#else
+	#define RK30_IPP_MEM_SIZE 16*SZ_1M
+#endif
+ 
 static struct rk29_keys_button key_button[] = {
 	{
 		.desc	= "play",
@@ -2002,16 +2015,21 @@ static void __init rk30_reserve(void)
 #endif
 
 #ifdef CONFIG_FB_ROCKCHIP
-	resource_fb[0].start = board_mem_reserve_add("fb0 buf", get_fb_size());
-	resource_fb[0].end = resource_fb[0].start + get_fb_size()- 1;
-#if 1
-	resource_fb[1].start = board_mem_reserve_add("ipp buf", get_fb_size());
-	resource_fb[1].end = resource_fb[1].start + get_fb_size() - 1;
+	resource_fb[0].start = board_mem_reserve_add("fb0 buf", RK30_FB0_MEM_SIZE);
+	resource_fb[0].end = resource_fb[0].start + RK30_FB0_MEM_SIZE- 1;
+#ifdef OMEGAMOON_CHANGED
+//  Omegamoon >> Referenced in drivers/video/rockchip/rk_fb.c
+	resource_fb[1].start = board_mem_reserve_add("ipp buf", RK30_IPP_MEM_SIZE);
+	resource_fb[1].end = resource_fb[1].start + RK30_IPP_MEM_SIZE - 1;
+#endif
+#if 0
+	resource_fb[1].start = board_mem_reserve_add("ipp buf", RK30_FB0_MEM_SIZE);
+	resource_fb[1].end = resource_fb[1].start + RK30_FB0_MEM_SIZE - 1;
 #endif
 
 #if defined(CONFIG_FB_ROTATE) || !defined(CONFIG_THREE_FB_BUFFER)
-	resource_fb[2].start = board_mem_reserve_add("fb2 buf",get_fb_size());
-	resource_fb[2].end = resource_fb[2].start + get_fb_size() - 1;
+	resource_fb[2].start = board_mem_reserve_add("fb2 buf",RK30_FB0_MEM_SIZE);
+	resource_fb[2].end = resource_fb[2].start + RK30_FB0_MEM_SIZE - 1;
 #endif
 #endif
 
